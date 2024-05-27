@@ -25,7 +25,7 @@ function App() {
 
     return (
         <div>
-            {isLoading && <div>Loading...</div>} {/*โหลดข้อมูลก่อน*/}
+            {isLoading && <div>Loading...</div>} {/*โหลดข้อมูลมาก่อน*/}
             {products && <ProductBlogs products={products} />}
             {/* <Navbar /> */}
             {/* <Catalog /> */}
