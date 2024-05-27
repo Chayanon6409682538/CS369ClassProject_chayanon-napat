@@ -1,17 +1,22 @@
+import Menu from './Menu'
+import './index.css'
 import { Link } from "react-router-dom";
 
 const ProductBlogs = ({ products }) => {
     return (
-        <div className="products-blog">
-            {products.map((product) => (
-                <div key={product.id}>
-                    <Link to={`/product/${product.id}`}>
-                    <h2>{product.productName}</h2>
-                    <p>Price : {product.productPrice}</p>
-                    </Link>
-                </div>
-            ))}
-        </div>
+            <div className="products-blog">
+                {products.map((product) => (
+                    <div key={product.id} className="product-card">
+                        <Link to={`/product/${product.id}`}>
+                            <img src={product.productImage} alt={product.productName} className="product-image" />
+                            <div className="product-info">
+                                <h2 className="product-name">{product.productName}</h2>
+                                <p className="product-price">Price: {product.productPrice}</p>
+                            </div>
+                        </Link>
+                    </div>
+                ))}
+            </div>
     )
 }
 export default ProductBlogs;
