@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
 import axios from 'axios'
 import ProductBlogs from './ProductBlogs'
 import useAxios from './useAxios'
-
+import Menu from './Menu'
+import './index.css'
 
 function App() {
     const {data: products, isLoading} = useAxios('http://localhost:3000/product')
@@ -24,11 +24,13 @@ function App() {
     // }, []);
 
     return (
-        <div>
-            {isLoading && <div>Loading...</div>} {/*โหลดข้อมูลมาก่อน*/}
-            {products && <ProductBlogs products={products} />}
-            {/* <Navbar /> */}
-            {/* <Catalog /> */}
+        <div className= "App">
+            <Menu />
+            <div className="content">
+                {isLoading && <div>Loading...</div>} {/*โหลดข้อมูลมาก่อน*/}
+                {products && <ProductBlogs products={products} />}
+                {/* <Catalog /> */}
+            </div>
         </div>
     );
 }
