@@ -8,10 +8,11 @@ const ProductBlogs = ({ products }) => {
                 {products.map((product) => (
                     <div key={product.id} className="product-card">
                         <Link to={`/product/${product.id}`}>
-                            <img src={product.productImage} alt={product.productName} className="product-image" />
+                            <img src={`uploads/${product.PathToPicture}`} alt={product.productName} className="product-image" />
                             <div className="product-info">
                                 <h2 className="product-name">{product.productName}</h2>
                                 <p className="product-price">Price: {product.productPrice}</p>
+                                {console.log(product.PathToPicture)}
                             </div>
                         </Link>
                     </div>

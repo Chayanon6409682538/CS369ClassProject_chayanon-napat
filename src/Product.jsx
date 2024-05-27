@@ -16,7 +16,8 @@ function Product() {
                 {isLoading && <div>Loading...</div>}
                 {product && (
                     <article className="product-article">
-                        <img src={product.productImage} alt={product.productName} className="product-detail-image" />
+                        <img src={`http://localhost:3000/uploads/${product.PathToPicture}`} alt={product.productName} className="product-detail-image" />
+                        {console.log(product.PathToPicture)}
                         <div className="product-info">
                             <h2 className="product-name">{product.productName}</h2>
                             <p className="product-price">Price: {product.productPrice}</p>
