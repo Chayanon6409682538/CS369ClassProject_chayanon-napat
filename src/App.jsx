@@ -1,16 +1,36 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import axios from 'axios'
+import ProductBlogs from './ProductBlogs'
+import useAxios from './useAxios'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+    const {data: products, isLoading} = useAxios('http://localhost:3000/product')
 
-  return (
-    <div>
-      cs369
-    </div>
-  )
+    // useEffect(() => {
+    //     axios.get('http://localhost:3000/product')
+    //         .then((res) => res.data)
+    //         .then(data => {
+    //             setProducts(data);
+    //             setIsLoading(false);  // การโหลดเสร็จสิ้น
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //             setIsLoading(false);  // การโหลดเสร็จสิ้นแม้เกิดข้อผิดพลาด
+    //         });
+    // }, []);
+
+    return (
+        <div>
+            {isLoading && <div>Loading...</div>}
+            {products && <ProductBlogs products={products} />}
+            {/* <Navbar /> */}
+            {/* <Catalog /> */}
+        </div>
+    );
 }
 
 export default App

@@ -2,39 +2,26 @@ import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import useAxios from './useAxios'
 
 function Product() {
-    const [products, setProducts] = useState([]);  // เริ่มต้นเป็นอาร์เรย์ว่าง
-    const [isLoading, setIsLoading] = useState(true);  // เริ่มต้นเป็น true เพื่อแสดงการโหลด
+    const { id } = useParams()
+    const { data: product, isLoading} = useAxios('http://localhost:3000/product/' +id);
 
-    useEffect(() => {
-        axios.get('http://localhost:3000/product')
-            .then((res) => res.data)
-            .then(data => {
-                setProducts(data);
-                setIsLoading(false);  // การโหลดเสร็จสิ้น
-            })
-            .catch((error) => {
-                console.error(error);
-                setIsLoading(false);  // การโหลดเสร็จสิ้นแม้เกิดข้อผิดพลาด
-            });
-    }, []);
-
-    return (
-        <>
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : (
-                <div>
-                    {products.map((product) => (
-                        <div key={product.id}>{product.productName}</div>
-                    ))}
-                </div>
+    return(
+        <div className="product-details">
+            <p>productdetais- {id}</p>
+            {isLoading && <div>Loading...</div>}
+            {product && (
+                <article>
+                    <h2>{product.productName}</h2>
+                    <p>Price : {product.productPrice}</p>
+                    <p>Description : {product.productDescription}</p>
+                </article>
             )}
-            {/* <Navbar /> */}
-            {/* <Catalog /> */}
-        </>
+        </div>
     );
 }
 

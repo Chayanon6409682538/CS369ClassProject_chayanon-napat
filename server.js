@@ -38,6 +38,27 @@ app.get('/product', (req, res) => {
       });
   });
 
+  app.get('/product/:id', (req, res) => {
+    const { id } = req.params;
+    sql.connect(config)
+      .then(pool => {
+        return pool.request()
+                   .input('productId', sql.Int, id)
+                   .query('SELECT * FROM product WHERE id = @productId');
+      })
+      .then(result => {
+        if (result.recordset.length > 0) {
+            res.json(result.recordset[0]);
+        } else {
+            res.status(404).json({ error: 'Product not found' });
+        }
+      })
+      .catch(err => {
+        console.error('Error:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+      });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

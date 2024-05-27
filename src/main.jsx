@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <BrowserRouter>
             <Routes>
                 <Route path="/" exact element={<App />} />
-                <Route path="/product" element={<Product />} />
+                <Route path="/product/:id" element={<Product />} />
                 {/* <Route path="/addProduct" element={<RequireAuth element={<AddProduct />} />} /> */}
                 <Route path="/login" element={<Login />} />
                 <Route path="*" element={<Navigate to="/" />} />
