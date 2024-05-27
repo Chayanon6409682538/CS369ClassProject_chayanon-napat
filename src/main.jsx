@@ -6,6 +6,7 @@ import Product from './Product.jsx';
 //import AddProduct from './AddProduct.jsx';
 import Login from './Login.jsx';
 import './index.css';
+import AddProduct from './AddProduct.jsx';
 //import { AuthProvider} from './AuthContext.jsx';
 //import RequireAuth from './RequireAuth.jsx';
 
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Routes>
                 <Route path="/" exact element={<App />} />
                 <Route path="/product/:id" element={<Product />} />
+                <Route path="/addProduct" element={<AddProduct />} />
                 {/* <Route path="/addProduct" element={<RequireAuth element={<AddProduct />} />} /> */}
                 <Route path="/login" element={<Login />} />
                 <Route path="*" element={<Navigate to="/" />} />
