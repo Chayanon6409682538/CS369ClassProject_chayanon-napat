@@ -7,7 +7,7 @@ import './index.css';
 
 function Product() {
     const { id } = useParams();
-    const { data: product, isLoading } = useAxios('http://localhost:3000/product/' + id);
+    const { data: product, isLoading } = useAxios('/product/' + id);
 
     return (
         <div className="product-page">
@@ -22,6 +22,7 @@ function Product() {
                             <h2 className="product-name">{product.productName}</h2>
                             <p className="product-price">Price: {product.productPrice}</p>
                             <p className="product-description">{product.productDescription}</p>
+                            <p className="product-size">Size: {product.size}</p>
                         </div>
                     </article>
                 )}

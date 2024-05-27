@@ -1,6 +1,8 @@
 //import e from 'express';
 import { useState, useEffect } from 'react'
 import axios from 'axios'; // import axios ที่นี่
+import './index.css';
+import api from './api';
 
 const AddProduct = () => {
     const [productName, setProductName] = useState('');
@@ -23,7 +25,7 @@ const AddProduct = () => {
         try {
             //const token = localStorage.getItem('token');
             console.log(product.image)
-            await axios.post('http://localhost:3000/products', {
+            await api.post('/products', {
               name:productName,
               image:imgUrl,
               price:productPrice,
@@ -68,7 +70,7 @@ const AddProduct = () => {
           const formData = new FormData();
           formData.append("file", product.image);
           console.log(product.image)
-          const res = await axios.post("http://localhost:3000/upload", formData);
+          const res = await api.post("/upload", formData);
           return res.data;
         } catch (err) {
           console.log(err);
@@ -84,7 +86,7 @@ const AddProduct = () => {
                     type="text" id="name" name='name'
                     required
                     value={productName}
-                    onChange={(e) => setproductName(e.target.value)}
+                    onChange={(e) => setProductName(e.target.value)}
                 />
             
                 <label> Product price: </label>
@@ -92,14 +94,14 @@ const AddProduct = () => {
                     type="text"
                     required
                     value={productPrice}
-                    onChange={(e) => setproductPrice(e.target.value)}
+                    onChange={(e) => setProductPrice(e.target.value)}
                 />
 
                 <label> Product description: </label>
                 <textarea 
                     required
                     value={productDescription}
-                    onChange={(e) => setproductDescription(e.target.value)}
+                    onChange={(e) => setProductDescription(e.target.value)}
                 ></textarea>
 
                 <label> Product size: </label>

@@ -6,9 +6,10 @@ import ProductBlogs from './ProductBlogs'
 import useAxios from './useAxios'
 import Menu from './Menu'
 import './index.css'
+import api from './api';
 
 function App() {
-    const {data: products, isLoading} = useAxios('http://localhost:3000/product')
+    const {data: products, isLoading} = useAxios('/product')
 
     // useEffect(() => {
     //     axios.get('http://localhost:3000/product')
