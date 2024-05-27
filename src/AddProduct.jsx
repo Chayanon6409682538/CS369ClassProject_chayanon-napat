@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'; // import axios ที่นี่
 
 const AddProduct = () => {
-    const [productName, setproductName] = useState('');
-    const [productPrice, setproductPrice] = useState('');
-    const [productDescription, setproductDescription] = useState('');
+    const [productName, setProductName] = useState('');
+    const [productPrice, setProductPrice] = useState('');
+    const [productDescription, setProductDescription] = useState('');
     const [size, setSize] = useState('s');
 
     const [product, setProduct] = useState({
@@ -120,7 +120,7 @@ const AddProduct = () => {
                     </button>
                 </form>
         </div>
-     );
+    );
 }
- 
+
 export default AddProduct;
