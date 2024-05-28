@@ -77,50 +77,55 @@ const AddProduct = () => {
         }
       };
 
-    return ( 
-        <div className="addproduct">
-            <h2>Add new Product</h2>
-            <form>
-                <label> Product name: </label>
-                <input 
-                    type="text" id="name" name='name'
-                    required
-                    value={productName}
-                    onChange={(e) => setProductName(e.target.value)}
-                />
-            
-                <label> Product price: </label>
-                <input
-                    type="text"
-                    required
-                    value={productPrice}
-                    onChange={(e) => setProductPrice(e.target.value)}
-                />
-
-                <label> Product description: </label>
-                <textarea 
-                    required
-                    value={productDescription}
-                    onChange={(e) => setProductDescription(e.target.value)}
-                ></textarea>
-
-                <label> Product size: </label>
-                <select
-                    value={size}
-                    onChange={(e) => setSize(e.target.value)}
-                >
-                    <option value="s">S</option>
-                    <option value="m">M</option>
-                    <option value="l">L</option>
-                </select>
+      return (
+        <div className="add-product-page">
+            <div className="add-product-container">
+                <h2>Add New Product</h2>
+                <form onSubmit={handleSubmit} className="add-product-form">
+                    <div className="form-group">
+                        <label>Product Name:</label>
+                        <input 
+                            type="text" 
+                            required
+                            value={productName}
+                            onChange={(e) => setProductName(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Product Price:</label>
+                        <input
+                            type="text"
+                            required
+                            value={productPrice}
+                            onChange={(e) => setProductPrice(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Product Description:</label>
+                        <textarea 
+                            required
+                            value={productDescription}
+                            onChange={(e) => setProductDescription(e.target.value)}
+                        ></textarea>
+                    </div>
+                    <div className="form-group">
+                        <label>Product Size:</label>
+                        <select
+                            value={size}
+                            onChange={(e) => setSize(e.target.value)}
+                        >
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Product Image:</label>
+                        <input type="file" accept="image/*" name="image" onChange={handleChange} />
+                    </div>
+                    <button type="submit" className="add-product-button">Add Product</button>
                 </form>
-
-                <form onSubmit={handleSubmit}>
-                    <input type="file" id="image" accept="image/*" name="image" onChange={handleChange} />
-                    <button type="button" onClick={handleSubmit} className="submit-btn">
-                        Add Product
-                    </button>
-                </form>
+            </div>
         </div>
     );
 }
