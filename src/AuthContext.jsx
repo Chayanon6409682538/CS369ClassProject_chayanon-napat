@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, Children } from 'react';
 import axios from 'axios';
+import { isAuth } from './isAuth';
 
 const AuthContext = createContext();
 
@@ -7,12 +8,20 @@ export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(null);
 
     useEffect(() => {
-        const author = axios.defaults.headers.common["Authorization"];
-        if(author) {
+        const token = sessionStorage.getItem('token');
+        if (token) {
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             setAuth(true);
-        } else {
+             console.log(isAuth());
+        }else{
             setAuth(false);
         }
+        // const author = axios.defaults.headers.common["Authorization"];
+        // if(author) {
+        //     setAuth(true);
+        // } else {
+        //     setAuth(false);
+        //}
     }, []);
 
     return (

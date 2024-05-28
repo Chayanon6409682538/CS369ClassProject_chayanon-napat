@@ -1,9 +1,10 @@
 //import e from 'express';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'; // import axios ที่นี่
 import './index.css';
 import api from './api';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from './AuthContext';
 
 const AddProduct = () => {
     const [productName, setProductName] = useState('');
@@ -11,6 +12,7 @@ const AddProduct = () => {
     const [productDescription, setProductDescription] = useState('');
     const [size, setSize] = useState('S');
     const navigate = useNavigate(); // ใช้ useNavigate สำหรับการนำทาง
+    const {auth, setAuth} = useContext(AuthContext);
 
     const [product, setProduct] = useState({
         productName: '',
@@ -35,9 +37,9 @@ const AddProduct = () => {
               size:size
             }, {
                
-                // headers: { 
-                //           'Authorization': `Bearer ${token}`
-                // } // กำหนด header
+                //  headers: { 
+                //            'Authorization': `Bearer ${token}`
+                //  } // กำหนด header
               });
     
               // Redirect to Home

@@ -1,15 +1,56 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import './index.css';
+import AuthContext from './AuthContext';
+import axios from 'axios';
+import api from './api';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    //const [username, setUsername] = useState('');
+    //const [password, setPassword] = useState('');
+    const {auth, setAuth} = useContext(AuthContext);
+    const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const [form, setForm] = useState({
+        username: "",
+        password: "",
+    })
+
+    const handleChange = e =>{
+        const next = {
+            ...form,
+            [e.target.name]: e.target.value,
+        }
+        setForm(next);
+       // console.log(next)
+        console.log(e.target.name)
+        //console.log(e.target.value)
+    }
+
+    const handleLogin = async (e) => {
         e.preventDefault();
         // Add login logic here
-        console.log('Email:', email);
-        console.log('Password:', password);
+        console.log('Username:', form.username);
+        console.log('Password:', form.password);
+        try{
+            console.log(form.username)
+            const res = await api.post(`/auth` , form)
+            console.log(res.data.token)
+            if (res.data.token) {
+                sessionStorage.setItem('token', res.data.token);
+                axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
+                setAuth(true);
+                alert('done!')
+                navigate('/') 
+            } else {
+                delete axios.defaults.headers.common["Authorization"];
+                setAuth(false);
+                alert('Invalid credentials')
+            }
+
+        } catch(err){
+            alert('Invalid try credentials')
+        }
     }
 
     return (
@@ -18,12 +59,13 @@ function Login() {
                 <h2>Log in</h2>
                 <form onSubmit={handleLogin} className="login-form">
                     <div className="form-group">
-                        <label htmlFor="email">Email:</label>
+                        <label>Username:</label>
                         <input
-                            type="email"
+                            type="text"
                             id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            name="username"
+                            value={form.username}
+                            onChange={handleChange}
                             required
                         />
                     </div>
@@ -32,8 +74,9 @@ function Login() {
                         <input
                             type="password"
                             id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            name="password"
+                            value={form.password}
+                            onChange={handleChange}
                             required
                         />
                     </div>

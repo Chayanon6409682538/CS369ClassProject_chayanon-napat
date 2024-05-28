@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import axios from 'axios'
@@ -7,9 +7,11 @@ import useAxios from './useAxios'
 import Menu from './Menu'
 import './index.css'
 import api from './api';
+import AuthContext from './AuthContext';
 
 function App() {
     const {data: products, isLoading} = useAxios('/product')
+    const {auth, setAuth} = useContext(AuthContext);
 
     // useEffect(() => {
     //     axios.get('http://localhost:3000/product')

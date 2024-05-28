@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import sql from "mssql";
 //import axios from 'axios'; // import axios ที่นี่
 import multer from 'multer';  // เปลี่ยนจาก require เป็น import
+import jwt from 'jsonwebtoken'
 
 //upload image
 const storage = multer.diskStorage({
@@ -38,6 +39,7 @@ const config = {
 
 //get account
 app.post('/auth',(req,res) => {
+  console.log("hello");
   const user = req.body;
   sql.connect(config)
     .then(pool => {
@@ -48,12 +50,13 @@ app.post('/auth',(req,res) => {
     .then(result => {
       if (result.recordset.length > 0) {
         var userfromquery = result.recordset[0];
+        console.log(userfromquery);
         if (user.password === userfromquery.userPassword){
           const jwtToken = jwt.sign(
             {
               id: userfromquery.id,
               username: userfromquery.userName,
-            },
+            },"1234",
             {expiresIn:'12h'}
           )
           res.json({message: 'Authenticate', token: jwtToken})
@@ -63,7 +66,7 @@ app.post('/auth',(req,res) => {
       } else {
         res.json({message: 'invalid...'})
       }
-    })
+    }) 
     .catch(error => {
       res.status(500).json({error: 'Internal Server Error'})
     })
