@@ -59,6 +59,11 @@
     transform: scale(1.05);
 }
 
+.product-card a {
+    text-decoration: none;
+    color: inherit; /* Inherit the color from the parent */
+}
+
 .product-image {
     width: 100%;
     height: 270px;

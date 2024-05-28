@@ -3,12 +3,14 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'; // import axios ที่นี่
 import './index.css';
 import api from './api';
+import { useNavigate } from 'react-router-dom';
 
 const AddProduct = () => {
     const [productName, setProductName] = useState('');
     const [productPrice, setProductPrice] = useState('');
     const [productDescription, setProductDescription] = useState('');
-    const [size, setSize] = useState('s');
+    const [size, setSize] = useState('S');
+    const navigate = useNavigate(); // ใช้ useNavigate สำหรับการนำทาง
 
     const [product, setProduct] = useState({
         productName: '',
@@ -39,10 +41,10 @@ const AddProduct = () => {
               });
     
               // Redirect to Home
-        navigate('/'); 
+              navigate('/'); 
     
         // handle success
-        alert('เพิ่มสินค้าสำเร็จ');
+        //alert('เพิ่มสินค้าสำเร็จ');
         setProduct({
             productName: '',
             productPrice: '',
@@ -51,6 +53,7 @@ const AddProduct = () => {
             image: null
         });
           // handle success, e.g., redirect to product list or show a success message
+          
         } catch (err) {
           // handle error, e.g., show an error message
         }
