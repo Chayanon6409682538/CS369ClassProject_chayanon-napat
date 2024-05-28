@@ -20,7 +20,7 @@ function Product() {
                         {console.log(product.PathToPicture)}
                         <div className="product-info">
                             <h2 className="product-name">{product.productName}</h2>
-                            <p className="product-price">Price: {product.productPrice}</p>
+                            <p className="product-price">Price: {product.productPrice} Bath</p>
                             <p className="product-description">{product.productDescription}</p>
                             <p className="product-size">Size: {product.size}</p>
                         </div>

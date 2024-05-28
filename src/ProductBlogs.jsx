@@ -11,7 +11,7 @@ const ProductBlogs = ({ products }) => {
                             <img src={`uploads/${product.PathToPicture}`} alt={product.productName} className="product-image" />
                             <div className="product-info">
                                 <h2 className="product-name">{product.productName}</h2>
-                                <p className="product-price">Price: {product.productPrice}</p>
+                                <p className="product-price">Price: {product.productPrice} Bath</p> 
                                 {console.log(product.PathToPicture)}
                             </div>
                         </Link>
