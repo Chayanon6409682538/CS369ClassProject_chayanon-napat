@@ -6,7 +6,7 @@ import sql from "mssql";
 //import axios from 'axios'; // import axios ที่นี่
 import multer from 'multer';  // เปลี่ยนจาก require เป็น import
 
-
+//upload image
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/'); // กำหนดโฟลเดอร์สำหรับเก็บรูปภาพ
@@ -18,6 +18,7 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + '_' +(Math.floor(Math.random() * 90000) + 10000).toString() + lastnameFile);
   },
 });
+
 const upload = multer({ storage: storage });
 
 const app = express();
@@ -35,7 +36,40 @@ const config = {
     trustServerCertificate: false,
   };
 
-  
+//get account
+app.post('/auth',(req,res) => {
+  const user = req.body;
+  sql.connect(config)
+    .then(pool => {
+      return pool.request()
+      .input('userName', sql.NVarChar, user.username)
+      .query('SELECT * FROM "account" WHERE userName = @userName');
+    })
+    .then(result => {
+      if (result.recordset.length > 0) {
+        var userfromquery = result.recordset[0];
+        if (user.password === userfromquery.userPassword){
+          const jwtToken = jwt.sign(
+            {
+              id: userfromquery.id,
+              username: userfromquery.userName,
+            },
+            {expiresIn:'12h'}
+          )
+          res.json({message: 'Authenticate', token: jwtToken})
+        } else {
+          res.json({message: 'invalid...'})
+        }
+      } else {
+        res.json({message: 'invalid...'})
+      }
+    })
+    .catch(error => {
+      res.status(500).json({error: 'Internal Server Error'})
+    })
+})
+
+  //upload image
   app.post("/upload", upload.single("file"), function (req, res) {
     console.log("hello");
     console.log(req.file);
@@ -43,10 +77,9 @@ const config = {
   res.status(200).json(file.filename);
 });
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
+
+//get product from database
 app.get('/product', (req, res) => {
     sql.connect(config)
       .then(pool => {
@@ -61,6 +94,7 @@ app.get('/product', (req, res) => {
       });
   });
 
+//get product detail for each id
   app.get('/product/:id', (req, res) => {
     const { id } = req.params;
     sql.connect(config)
@@ -82,6 +116,7 @@ app.get('/product', (req, res) => {
       });
 });
 
+//upload addProduct to database
 app.post('/products', async (req, res) => {
   console.log("hello");
   const newProduct = { // สร้าง Object newProduct
@@ -110,6 +145,7 @@ res.send('Form data received and inserted into the database successfully!');
 }
 });
 
+//run server
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
